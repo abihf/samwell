@@ -1,2 +1,9 @@
 # samwell
+[![Build Status](https://travis-ci.org/abihf/samwell.svg?branch=master)](https://travis-ci.org/abihf/samwell)
+
 Zero config logger for Javascript
+
+## TODO:
+  * [ ] Complete readme
+  * [ ] Complete unit test
+  * [ ] Create example for server and browser
