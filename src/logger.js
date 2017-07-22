@@ -4,20 +4,20 @@ import util from 'util';
 
 export type LogArg = string | number | boolean | null | Error | {
   [name: string]: any,
-  err ? : Error,
+  err?: Error,
 };
 export type logFunction = (...args: LogArg[]) => void;
 
 export type LogItemContext = {
   [name: string]: any,
-  err ? : Error,
+  err?: Error,
 };
 
 export type LogItem = {
   time: Date,
   level: string,
   msg: string,
-  context: ? LogItemContext,
+  context: ?LogItemContext,
 }
 export type Writer = (log: LogItem) => void;
 
@@ -28,10 +28,10 @@ export class Logger {
   warn: logFunction;
   error: logFunction;
 
-  writer: ? Writer;
-  baseContext: ? LogItemContext;
+  writer: ?Writer;
+  baseContext: ?LogItemContext;
 
-  constructor(baseContext: ? LogItemContext, writer : ? Writer) {
+  constructor(baseContext: ?LogItemContext, writer: ?Writer) {
     this.writer = writer;
     this.baseContext = baseContext;
 
@@ -49,8 +49,8 @@ export class Logger {
       context = args.pop();
     }
 
-    var error: ? Error = null;
-    var realContext: ? LogItemContext = null;
+    var error: ?Error = null;
+    var realContext: ?LogItemContext = null;
     if (context instanceof Error) {
       error = context
       realContext = { err: error };
