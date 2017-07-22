@@ -3,16 +3,21 @@
 import process from 'process';
 import type { Writer } from '../logger';
 
-let writer: Writer;
-
-let writerType = process.env.SAMWELL_OUTPUT;
-if (!writerType) {
-  writerType = process.env.NODE_ENV === 'production' ? 'json' : 'terminal';
+export function getServerWriter(
+  nodeEnv: ?string,
+  samwellOutput: ?string
+): Writer {
+  let writerType = samwellOutput;
+  if (!writerType) {
+    writerType = nodeEnv === 'production' ? 'json' : 'terminal';
+  }
+  if (writerType === 'json') {
+    return require('./json');
+  }
+  return require('./terminal');
 }
-if (writerType === 'json') {
-  writer = require('./json');
-} else {
-  writer = require('./terminal');
-}
 
-module.exports = writer;
+export const defaultWriter = getServerWriter(
+  process.env.NODE_ENV,
+  process.env.SAMWELL_OUTPUT
+);
