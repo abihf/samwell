@@ -6,7 +6,7 @@
   "files": [
     "lib/",
     "index.js",
-    "register-server.json"
+    "register-server.js"
   ],
   "scripts": {
     "build": "babel src -d lib",

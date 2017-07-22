@@ -16,11 +16,14 @@ script:
   - yarn lint
   - yarn test
   - codecov
+
+before_deploy: 
   - yarn build
 
 deploy:
   provider: npm
   email: abi@hafs.in
   api_key: $NPM_KEY
+  skip_cleanup: true
   on:
     tags: true
