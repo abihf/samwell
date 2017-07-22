@@ -8,3 +8,6 @@ Zero config logger for Javascript
   * [ ] Complete readme
   * [ ] Complete unit test
   * [ ] Create example for server and browser
+
+## LICENSE
+(c) 2017 Abi Hafshin
