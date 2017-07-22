@@ -88,4 +88,33 @@ describe('Logger', () => {
       context: { err },
     });
   });
+
+  it('should be able take message from error', () => {
+    const writer = jest.fn();
+    const logger = new Logger(null, writer);
+    const err = new Error('error message');
+    logger.error(err);
+
+    expect(writer).toHaveBeenCalledTimes(1);
+    expect(writer.mock.calls[0][0]).toMatchObject({
+      msg: 'error message',
+      context: { err },
+    });
+  });
+
+  it('should be able to create child logger', () => {
+    const writer = jest.fn();
+    const logger = new Logger(null, writer);
+    const childLogger = logger.createChild({ field1: 'value1' });
+    childLogger.info('Child logger test', { field2: 'value2' });
+
+    expect(writer).toHaveBeenCalledTimes(1);
+    expect(writer.mock.calls[0][0]).toMatchObject({
+      msg: 'Child logger test',
+      context: {
+        field1: 'value1',
+        field2: 'value2',
+      },
+    });
+  });
 });
