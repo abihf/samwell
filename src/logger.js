@@ -62,7 +62,7 @@ export class Logger {
     }
 
     if (this.baseContext) {
-      realContext = Object.assign(this.baseContext, realContext);
+      realContext = Object.assign({}, this.baseContext, realContext);
     }
 
     let msg = '';
