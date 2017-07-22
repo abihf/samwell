@@ -33,10 +33,10 @@ export class Logger {
   warn: LogFunction;
   error: LogFunction;
 
-  writer: ?Writer;
+  writer: Writer;
   baseContext: ?LogItemContext;
 
-  constructor(baseContext: ?LogItemContext, writer: ?Writer) {
+  constructor(baseContext: ?LogItemContext, writer: Writer) {
     this.writer = writer;
     this.baseContext = baseContext;
 
@@ -74,14 +74,12 @@ export class Logger {
       msg = util.format.apply(null, args);
     }
 
-    if (this.writer) {
-      this.writer({
-        time: new Date(),
-        level,
-        msg,
-        context: realContext,
-      });
-    }
+    this.writer({
+      time: new Date(),
+      level,
+      msg,
+      context: realContext,
+    });
   }
 
   createChild(context: LogItemContext) {
