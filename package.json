@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "Zero config logger for Javascript",
   "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "index.js",
+    "register-server.json"
+  ],
   "scripts": {
     "build": "babel src -d lib",
     "lint": "eslint src/",
@@ -11,11 +16,9 @@
   "repository": "https://www.github.com/abihf/samwell",
   "author": "Abi Hafshin <abi@hafs.in>",
   "license": "MIT",
-  "optionalDependencies": {
-    "colors": "^1.1.2",
-    "prettyjson": "^1.2.1"
-  },
   "dependencies": {
+    "colors": "^1.1.2",
+    "prettyjson": "^1.2.1",
     "safe-json-stringify": "^1.0.4"
   },
   "devDependencies": {
