@@ -1,6 +1,6 @@
 {
   "name": "samwell",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Zero config logger for Javascript",
   "main": "lib/index.js",
   "files": [
