@@ -2,11 +2,17 @@
 
 import util from 'util';
 
-export type LogArg = string | number | boolean | null | Error | {
-  [name: string]: any,
-  err?: Error,
-};
-export type logFunction = (...args: LogArg[]) => void;
+export type LogArg =
+  | string
+  | number
+  | bool
+  | null
+  | Error
+  | {
+      [name: string]: any,
+      err?: Error,
+    };
+export type LogFunction = (...args: LogArg[]) => void;
 
 export type LogItemContext = {
   [name: string]: any,
@@ -18,15 +24,14 @@ export type LogItem = {
   level: string,
   msg: string,
   context: ?LogItemContext,
-}
+};
 export type Writer = (log: LogItem) => void;
 
-
 export class Logger {
-  debug: logFunction;
-  info: logFunction;
-  warn: logFunction;
-  error: logFunction;
+  debug: LogFunction;
+  info: LogFunction;
+  warn: LogFunction;
+  error: LogFunction;
 
   writer: ?Writer;
   baseContext: ?LogItemContext;
@@ -41,18 +46,16 @@ export class Logger {
     this.error = this.log.bind(this, 'error');
   }
 
-  log(level, message, messageArgs, _context) {
-    var args = [].slice.call(arguments, 1)
-
-    var context: any = null;
+  log(level: string, ...args: LogArg[]) {
+    let context: any = null;
     if (typeof args[args.length - 1] === 'object') {
       context = args.pop();
     }
 
-    var error: ?Error = null;
-    var realContext: ?LogItemContext = null;
+    let error: ?Error = null;
+    let realContext: ?LogItemContext = null;
     if (context instanceof Error) {
-      error = context
+      error = context;
       realContext = { err: error };
     } else {
       realContext = context;
@@ -62,10 +65,10 @@ export class Logger {
       realContext = Object.assign(this.baseContext, realContext);
     }
 
-    var msg = '';
+    let msg = '';
     if (args.length === 1) {
       msg = args[0];
-    } else if (args.length == 0 && error) {
+    } else if (args.length === 0 && error) {
       msg = error.message;
     } else {
       msg = util.format.apply(null, args);
@@ -74,14 +77,17 @@ export class Logger {
     if (this.writer) {
       this.writer({
         time: new Date(),
-        level: level,
-        msg: msg,
+        level,
+        msg,
         context: realContext,
       });
     }
   }
 
-  createChild(context) {
-    return new Logger(Object.assign({}, this.baseContext, context), this.writer)
+  createChild(context: LogItemContext) {
+    return new Logger(
+      Object.assign({}, this.baseContext, context),
+      this.writer
+    );
   }
 }

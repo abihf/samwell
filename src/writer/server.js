@@ -1,11 +1,11 @@
 // @flow
 
 import process from 'process';
-import type { Writer } from '../logger'; 
+import type { Writer } from '../logger';
 
-var writer: Writer = log => {};
+let writer: Writer;
 
-var writerType = process.env.SAMWELL_OUTPUT;
+let writerType = process.env.SAMWELL_OUTPUT;
 if (!writerType) {
   writerType = process.env.NODE_ENV === 'production' ? 'json' : 'terminal';
 }

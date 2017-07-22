@@ -1,9 +1,7 @@
 module.exports = {
-  "extends": [
-    "plugin:flowtype/recommended"
-  ],
-  "plugins": [
-    "flowtype",
-    "jest"
-  ]
+  extends: ["plugin:jest/recommended", "marlint"],
+  plugins: ["jest"],
+  env: {
+    "jest/globals": true
+  }
 };

@@ -3,33 +3,39 @@
 import colors from 'colors/safe';
 import prettyjson from 'prettyjson';
 import { normalizeLogError } from '../error';
-import type { LogItem } from '../logger'; 
+import type { LogItem } from '../logger';
 
 module.exports = (log: LogItem, _console: Console) => {
   normalizeLogError(log);
-  
-  var time = colors.bgBlue.white(log.time.toISOString());
-  var level = ''
+
+  const time = colors.bgBlue.white(log.time.toISOString());
+  let level = '';
   switch (log.level) {
     case 'debug':
-      level = colors.bgWhite.green(' DEBUG:')
-      break
+      level = colors.bgWhite.green(' DEBUG:');
+      break;
     case 'info':
-      level = colors.bgWhite.blue(' INFO:')
-      break
+      level = colors.bgWhite.blue(' INFO:');
+      break;
     case 'warn':
-      level = colors.bgWhite.yellow(' WARNING:')
-      break
+      level = colors.bgWhite.yellow(' WARNING:');
+      break;
     case 'error':
-      level = colors.bgWhite.red(' ERROR:')
-      break
+      level = colors.bgWhite.red(' ERROR:');
+      break;
+    default:
+      level = colors.bgWhite.cyan(' UNKNOWN:');
+      break;
   }
-  var context = log.context == null ? ''
-    : '\n' + prettyjson.render(log.context)
+
+  const context =
+    log.context &&
+    prettyjson
+      .render(log.context)
       .split('\n')
-      .map(line => '  ' + line)
+      .map(line => `  ${line}`)
       .join('\n');
 
-  if (!_console) _console = console;
-  _console.log(time + level + ' ' + log.msg + context)
-}
+  (_console || console)
+    .log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context}`);
+};

@@ -24,15 +24,14 @@
     "babel-jest": "^20.0.3",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^4.3.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^3.14.1",
+    "eslint-config-marlint": "^5.0.2",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-flowtype": "~2.30.0",
     "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "flow-bin": "^0.51.0",
+    "eslint-plugin-react": "^6.9.0",
     "jest": "^20.0.4"
   },
   "jest": {
@@ -40,6 +39,9 @@
       "^.+\\.js$": "babel-jest"
     },
     "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
   }
 }
