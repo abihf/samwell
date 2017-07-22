@@ -1,5 +1,4 @@
 const { Logger } = require('./logger');
-const errorModule = require('./error');
 
 describe('Logger', () => {
   it('should return valid date', () => {
@@ -75,5 +74,19 @@ describe('Logger', () => {
         test: 234
       },
     });
+  });
+
+  it('should log the error', () => {
+    var writer = jest.fn();
+    var logger = new Logger(null, writer);
+    var err = new Error('error message');
+    logger.error('Error test', err);
+
+    expect(writer).toHaveBeenCalledTimes(1);
+    expect(writer.mock.calls[0][0]).toMatchObject({
+      msg: 'Error test',
+      context: { err },
+    });
+
   });
 });
