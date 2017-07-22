@@ -1,13 +1,17 @@
 language: node_js
+node_js:
+  - "6"
 
-cache:
-  directories:
-    - "node_modules"
+cache: yarn
+
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.27.5
+  - export PATH="$HOME/.yarn/bin:$PATH"
 
 install:
+  - yarn
   - npm install -g codecov
-  - npm install
-
+  
 script:
   - npm run lint
   - npm run test
