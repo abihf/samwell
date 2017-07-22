@@ -23,17 +23,20 @@ describe('JSON Logger', () => {
 
   it('Can handle unsafe context', () => {
     const logFunc = jest.fn();
-    const obj1 = { a: 1 };
+    const obj1 = { a: 1, d: {} };
     const obj2 = { b: 2, c: obj1 };
     obj1.d = obj2;
-    const logItem = {
-      level: 'debug',
-      msg: 'Debug message',
-      context: obj2,
-    };
-    jsonWriter(Object.assign({}, logItem, { time: constantTime }), {
-      log: logFunc,
-    });
+    jsonWriter(
+      {
+        time: constantTime,
+        level: 'debug',
+        msg: 'Debug message',
+        context: obj2,
+      },
+      {
+        log: logFunc,
+      }
+    );
 
     expect(logFunc).toHaveBeenCalledTimes(1);
   });

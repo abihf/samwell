@@ -18,8 +18,10 @@ export function errorToObject(err: Error): ErrorDefinition {
 
 export function normalizeLogError(log: LogItem) {
   if (log.context && log.context.err && log.context.err instanceof Error) {
-    log.context = Object.assign({}, log.context, {
+    const context = Object.assign({}, log.context, {
       err: errorToObject(log.context.err),
     });
+    return Object.assign({}, log, { context });
   }
+  return log;
 }

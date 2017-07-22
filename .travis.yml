@@ -13,7 +13,9 @@ install:
   - yarn global add codecov --prefer-offline
 
 script:
+  - set -e
   - yarn lint
+  - yarn flow
   - yarn test
   - codecov
 

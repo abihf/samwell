@@ -5,11 +5,11 @@ import prettyjson from 'prettyjson';
 import { normalizeLogError } from '../error';
 import type { LogItem } from '../logger';
 
-module.exports = (log: LogItem, _console: Console) => {
-  normalizeLogError(log);
+module.exports = (dirtyLog: LogItem, _console: any) => {
+  const log: { [name: string]: any } | LogItem = normalizeLogError(dirtyLog);
 
-  const time = colors.bgBlue.white(log.time.toISOString());
-  let level = '';
+  const time: string = colors.bgBlue.white(log.time.toISOString());
+  let level: string = '';
   switch (log.level) {
     case 'debug':
       level = colors.bgWhite.green(' DEBUG:');
@@ -37,5 +37,5 @@ module.exports = (log: LogItem, _console: Console) => {
       .join('\n');
 
   (_console || console)
-    .log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context}`);
+    .log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context || ''}`);
 };

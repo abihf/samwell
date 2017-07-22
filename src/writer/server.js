@@ -1,6 +1,5 @@
 // @flow
 
-import process from 'process';
 import type { Writer } from '../logger';
 
 export function getServerWriter(

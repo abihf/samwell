@@ -2,22 +2,12 @@
 
 import util from 'util';
 
-export type LogArg =
-  | string
-  | number
-  | bool
-  | null
-  | Error
-  | {
-      [name: string]: any,
-      err?: Error,
-    };
-export type LogFunction = (...args: LogArg[]) => void;
-
 export type LogItemContext = {
   [name: string]: any,
   err?: Error,
 };
+
+export type LogFunction = (...args: any[]) => void;
 
 export type LogItem = {
   time: Date,
@@ -46,8 +36,8 @@ export class Logger {
     this.error = this.log.bind(this, 'error');
   }
 
-  log(level: string, ...args: LogArg[]) {
-    let context: any = null;
+  log(level: string, ...args: any[]) {
+    let context: LogItemContext | Error | null = null;
     if (typeof args[args.length - 1] === 'object') {
       context = args.pop();
     }
@@ -65,13 +55,11 @@ export class Logger {
       realContext = Object.assign({}, this.baseContext, realContext);
     }
 
-    let msg = '';
-    if (args.length === 1) {
-      msg = args[0];
-    } else if (args.length === 0 && error) {
+    let msg: string = '';
+    if (args.length === 0 && error) {
       msg = error.message;
     } else {
-      msg = util.format.apply(null, args);
+      msg = util.format(...args);
     }
 
     this.writer({
@@ -82,7 +70,7 @@ export class Logger {
     });
   }
 
-  createChild(context: LogItemContext) {
+  createChild(context: LogItemContext): Logger {
     return new Logger(
       Object.assign({}, this.baseContext, context),
       this.writer

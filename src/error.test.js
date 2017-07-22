@@ -13,17 +13,18 @@ describe('Error handler', () => {
     expect(map.stack.length).toBeGreaterThan(0);
   });
 
-  it('should normalize convert error inside LogItem', () => {
-    const item = {
-      message: 'log message',
+  it('should convert error inside LogItem', () => {
+    const normalized = normalizeLogError({
+      time: new Date(),
+      level: 'debug',
+      msg: 'log message',
       context: {
         err: new Error('another error message'),
       },
-    };
-    normalizeLogError(item);
+    });
 
-    expect(item).toMatchObject({
-      message: 'log message',
+    expect(normalized).toMatchObject({
+      msg: 'log message',
       context: {
         err: {
           name: 'Error',

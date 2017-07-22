@@ -6,11 +6,11 @@ import { normalizeLogError } from '../error';
 import type { LogItem } from '../logger';
 
 function stringify(obj: LogItem): string {
-  normalizeLogError(obj);
+  const normalized = normalizeLogError(obj);
   try {
-    return JSON.stringify(obj);
+    return JSON.stringify(normalized);
   } catch (e) {
-    return safeJsonStringify(obj);
+    return safeJsonStringify(normalized);
   }
 }
 
