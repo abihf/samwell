@@ -1,20 +1,23 @@
 // @flow
 
 import util from 'util';
-import { errorToObject } from './error'
 
 export type LogArg = string | number | boolean | null | Error | {
   [name: string]: any,
-  err?: Error,
+  err ? : Error,
 };
-export type logFunction = (...args:LogArg[]) => void;
+export type logFunction = (...args: LogArg[]) => void;
 
-export type LogItemContext = {[name: string]: any}
+export type LogItemContext = {
+  [name: string]: any,
+  err ? : Error,
+};
+
 export type LogItem = {
   time: Date,
   level: string,
   msg: string,
-  context: ?LogItemContext,
+  context: ? LogItemContext,
 }
 export type Writer = (log: LogItem) => void;
 
@@ -25,10 +28,10 @@ export class Logger {
   warn: logFunction;
   error: logFunction;
 
-  writer: ?Writer;
-  baseContext: ?LogItemContext;
+  writer: ? Writer;
+  baseContext: ? LogItemContext;
 
-  constructor(baseContext: ?LogItemContext, writer: ?Writer) {
+  constructor(baseContext: ? LogItemContext, writer : ? Writer) {
     this.writer = writer;
     this.baseContext = baseContext;
 
@@ -38,38 +41,34 @@ export class Logger {
     this.error = this.log.bind(this, 'error');
   }
 
-  log (level, message, messageArgs, _context) {
-    if (!this.writer) return
-
-    var level: string = arguments[0]
+  log(level, message, messageArgs, _context) {
     var args = [].slice.call(arguments, 1)
 
-    var context: any = null
-    if (typeof args[args.length - 1] === 'object') { context = args.pop() }
+    var context: any = null;
+    if (typeof args[args.length - 1] === 'object') {
+      context = args.pop();
+    }
 
-    var error: ?Error = null
-    var realContext: ?LogItemContext = null
+    var error: ? Error = null;
+    var realContext: ? LogItemContext = null;
     if (context instanceof Error) {
       error = context
-      realContext = {err: errorToObject(error)}
-    } else if (context && context.err instanceof Error) {
-      error = context.err
-      realContext = Object.assign(context, {err: errorToObject(error)})
+      realContext = { err: error };
     } else {
-      realContext = context
+      realContext = context;
     }
 
     if (this.baseContext) {
-      realContext = Object.assign(this.baseContext, realContext)
+      realContext = Object.assign(this.baseContext, realContext);
     }
 
-    var msg = ''
+    var msg = '';
     if (args.length === 1) {
-      msg = args[0]
+      msg = args[0];
     } else if (args.length == 0 && error) {
-      msg = error.message
+      msg = error.message;
     } else {
-      msg = util.format.apply(null, args)
+      msg = util.format.apply(null, args);
     }
 
     if (this.writer) {
@@ -77,14 +76,12 @@ export class Logger {
         time: new Date(),
         level: level,
         msg: msg,
-        context: realContext
+        context: realContext,
       });
     }
   }
 
-  createChild (context) {
+  createChild(context) {
     return new Logger(Object.assign({}, this.baseContext, context), this.writer)
   }
 }
-
-

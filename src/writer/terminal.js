@@ -1,12 +1,14 @@
 // @flow
 
 import colors from 'colors/safe';
-const prettyjson = require('prettyjson')
-
+import prettyjson from 'prettyjson';
+import { normalizeLogError } from '../error';
 import type { LogItem } from '../logger'; 
 
 module.exports = (log: LogItem, _console: Console) => {
-  var time = colors.bgBlue.white(log.time.toISOString())
+  normalizeLogError(log);
+  
+  var time = colors.bgBlue.white(log.time.toISOString());
   var level = ''
   switch (log.level) {
     case 'debug':

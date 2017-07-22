@@ -1,13 +1,12 @@
 // @flow
 
-const safeJsonStringify = require('safe-json-stringify')
+import safeJsonStringify from 'safe-json-stringify';
+import { normalizeLogError } from '../error';
 
-/*::
 import type {LogItem, LogItemContext} from '../logger'; 
-*/
 
-function stringify (obj /*: LogItem */) /*: string */ {
-  console.log(obj.lala);
+function stringify (obj: LogItem): string {
+  normalizeLogError(obj);
   try {
     return JSON.stringify(obj)
   } catch (e) {
@@ -15,4 +14,4 @@ function stringify (obj /*: LogItem */) /*: string */ {
   }
 }
 
-module.exports = (log /*: LogItem */) => console.log(stringify(log))
+module.exports = (log: LogItem) => console.log(stringify(log))
