@@ -1,0 +1,45 @@
+{
+  "name": "samwell",
+  "version": "0.0.1",
+  "description": "Zero config logger for Javascript",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "lint": "eslint src/",
+    "test": "jest"
+  },
+  "repository": "https://www.github.com/abihf/samwell",
+  "author": "Abi Hafshin <abi@hafs.in>",
+  "license": "MIT",
+  "optionalDependencies": {
+    "colors": "^1.1.2",
+    "prettyjson": "^1.2.1"
+  },
+  "dependencies": {
+    "safe-json-stringify": "^1.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.51.0",
+    "jest": "^20.0.4"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  }
+}
