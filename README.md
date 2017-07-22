@@ -6,7 +6,7 @@ Zero config logger for Javascript
 
 ## TODO:
   * [ ] Complete readme
-  * [ ] Complete unit test
+  * [x] Complete unit test
   * [ ] Create example for server and browser
 
 ## LICENSE
