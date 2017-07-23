@@ -3,7 +3,7 @@
 import safeJsonStringify from 'safe-json-stringify';
 import { normalizeLogError } from '../error';
 
-import type { LogItem, Writer } from '../logger';
+import type { LogItem } from '../logger';
 
 function stringify(obj: LogItem): string {
   const normalized = normalizeLogError(obj);
