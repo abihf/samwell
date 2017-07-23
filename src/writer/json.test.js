@@ -1,6 +1,6 @@
 // @flow
 
-const jsonWriter = require('./json');
+const jsonWriter = require('./json').default;
 const constantTime = new Date('2017-10-07');
 
 describe('JSON Logger', () => {
@@ -16,7 +16,7 @@ describe('JSON Logger', () => {
     });
 
     expect(logFunc).toHaveBeenCalledTimes(1);
-    const content = logFunc.mock.calls[0][0];
+    const content /* :string */ = logFunc.mock.calls[0][0];
     expect(content).not.toMatch(/\n/);
     expect(JSON.parse(content)).toMatchObject(logItem);
   });

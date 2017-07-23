@@ -1,6 +1,6 @@
 // @flow
 
-const dumbWriter = require('./dumb');
+const dumbWriter = require('./dumb').default;
 const constantTime = new Date('2017-10-07');
 
 describe('Dumb Logger', () => {

@@ -5,7 +5,9 @@ import prettyjson from 'prettyjson';
 import { normalizeLogError } from '../error';
 import type { LogItem } from '../logger';
 
-module.exports = (dirtyLog: LogItem, _console: any) => {
+type ConsoleLike = { log: (msg: string) => void };
+
+export default (dirtyLog: LogItem, _console: ?ConsoleLike) => {
   const log: { [name: string]: any } | LogItem = normalizeLogError(dirtyLog);
 
   const time: string = colors.bgBlue.white(log.time.toISOString());

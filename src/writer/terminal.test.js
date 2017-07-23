@@ -1,6 +1,6 @@
 // @flow
 
-const terminalWriter = require('./terminal');
+const terminalWriter = require('./terminal').default;
 const constantTime = new Date('2017-10-07');
 
 describe('Terminal Logger', () => {
@@ -75,7 +75,7 @@ describe('Terminal Logger', () => {
     );
 
     expect(logFunc).toHaveBeenCalledTimes(1);
-    const content = logFunc.mock.calls[0][0];
+    const content /* :string */ = logFunc.mock.calls[0][0];
     [
       /field1.*:.*"?.*value.*"?/,
       /field2.*:/,

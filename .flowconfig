@@ -1,10 +1,10 @@
 
 [libs]
-/flow-typed/
+./flow-typed
 
 [options]
 all=false
 module.system=node
 
 [ignore]
-/src/
+./lib
