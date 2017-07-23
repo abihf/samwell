@@ -12,6 +12,7 @@
     "build": "babel src -d lib",
     "lint": "eslint src/",
     "flow": "flow check",
+    "flow:coverage": "flow-coverage-report -i 'src/**/*.js' -t html -t json",
     "test": "jest"
   },
   "repository": "https://www.github.com/abihf/samwell",
@@ -37,6 +38,7 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-react": "^6.9.0",
     "flow-bin": "^0.51.0",
+    "flow-coverage-report": "^0.3.0",
     "jest": "^20.0.4"
   },
   "jest": {
