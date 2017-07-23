@@ -1,8 +1,8 @@
 // @flow
 
 const { getServerWriter } = require('./server');
-const jsonWriter = require('./json');
-const terminalWriter = require('./terminal');
+const jsonWriter = require('./json').default;
+const terminalWriter = require('./terminal').default;
 
 describe('Server logger', () => {
   it('should use terminal if no environment defined', () => {
