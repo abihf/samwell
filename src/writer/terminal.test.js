@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env jest */
 
 const terminalWriter = require('./terminal');
 const constantTime = new Date('2017-10-07');

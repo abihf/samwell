@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env jest */
 
 const dumbWriter = require('./dumb');
 const constantTime = new Date('2017-10-07');

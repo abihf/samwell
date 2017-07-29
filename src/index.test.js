@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env jest */
 
 const { Logger } = require('./logger');
 

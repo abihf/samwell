@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env jest */
 
 const { getServerWriter } = require('./server');
 const jsonWriter = require('./json');

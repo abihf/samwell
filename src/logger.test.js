@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 const { Logger } = require('./logger');
 
 describe('Logger', () => {
