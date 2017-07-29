@@ -1,6 +1,6 @@
 {
-  "presets": ["flow"],
   "plugins": [
+    "transform-flow-comments",
     "transform-es2015-modules-commonjs"
   ],
   "ignore": [

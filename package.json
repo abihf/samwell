@@ -27,7 +27,7 @@
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-    "babel-preset-flow": "^6.23.0",
+    "babel-plugin-transform-flow-comments": "^6.22.0",
     "eslint": "^3.14.1",
     "eslint-config-marlint": "^5.0.2",
     "eslint-plugin-babel": "^4.1.1",
