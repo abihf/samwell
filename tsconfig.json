@@ -1,24 +1,18 @@
 {
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "**/*.test.ts"
-  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.test.ts"],
   "compilerOptions": {
-    "alwaysStrict": true,
     "baseUrl": "src/",
-    "strictNullChecks": true,
-    "module": "commonjs",
-    "target": "es5",
     "outDir": "lib/",
+    "target": "es5",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "noUnusedLocals":true,
-    "noUnusedParameters": true,
-    "inlineSourceMap": true,
+    "lib": ["es6"],
     "declaration": true,
-    "lib": [
-      "es6"
-    ]
+    "inlineSourceMap": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   }
 }

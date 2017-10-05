@@ -1,14 +1,12 @@
 {
-  "include": [
-    "src/**/*.test.ts"
-  ],
+  "include": ["src/**/*.test.ts"],
   "compilerOptions": {
     "baseUrl": "src/",
+    "moduleResolution": "node",
     "alwaysStrict": true,
     "strictNullChecks": true,
-    "moduleResolution": "node",
-    "declaration":true,
-    "noUnusedLocals":true,
+    "declaration": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": true
   }
 }
