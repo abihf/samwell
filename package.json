@@ -3,16 +3,20 @@
   "version": "0.0.3",
   "description": "Zero config logger for Javascript",
   "main": "index.js",
+  "types": "./samwell.d.ts",
   "files": [
+    "README.md",
+    "src/",
     "lib/",
     "index.js",
-    "register-server.js"
+    "register-server.js",
+    "samwell.d.ts"
   ],
   "scripts": {
     "build": "tsc",
     "lint": "tslint -p tsconfig.json && tslint -p tsconfig-test.json",
     "test": "jest",
-    "dts": "dts-bundle --name samwell --main index.d.ts"
+    "dts": "dts-bundle --name samwell --main lib/index.d.ts --baseDir ./ --out samwell.d.ts && cat register-server.d.ts >> samwell.d.ts"
   },
   "repository": "https://www.github.com/abihf/samwell",
   "author": "Abi Hafshin <abi@hafs.in>",
@@ -42,7 +46,8 @@
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts$",
     "moduleFileExtensions": [
-      "ts", "js"
+      "ts",
+      "js"
     ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,

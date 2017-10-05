@@ -15,7 +15,8 @@
     "moduleResolution": "node",
     "noUnusedLocals":true,
     "noUnusedParameters": true,
-    "sourceMap": true,
+    "inlineSourceMap": true,
+    "declaration": true,
     "lib": [
       "es6"
     ]

@@ -17,9 +17,8 @@ script:
   - yarn lint
   - yarn test
   - codecov
-
-before_deploy:
   - yarn build
+  - yarn dts
 
 deploy:
   provider: npm
