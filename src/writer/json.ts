@@ -1,6 +1,5 @@
 import * as safeJsonStringify from 'safe-json-stringify';
 import { normalizeLogError } from '../error';
-
 import { ILogItem } from '../logger';
 
 function stringify(obj: ILogItem): string {
@@ -12,5 +11,5 @@ function stringify(obj: ILogItem): string {
   }
 }
 
-export default (log: ILogItem, customConsole?: any) =>
-  (customConsole || console).log(stringify(log));
+// tslint:disable-next-line:no-console
+export default (log: ILogItem) =>  console.log(stringify(log));

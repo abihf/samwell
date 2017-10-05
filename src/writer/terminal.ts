@@ -3,7 +3,7 @@ import * as prettyjson from 'prettyjson';
 import { normalizeLogError } from '../error';
 import { ILogItem } from '../logger';
 
-export default  (dirtyLog: ILogItem, customConsole?: any) => {
+export default  (dirtyLog: ILogItem) => {
   const log: ILogItem = normalizeLogError(dirtyLog);
 
   const time: string = colors.bgBlue.white(log.time.toISOString());
@@ -34,6 +34,6 @@ export default  (dirtyLog: ILogItem, customConsole?: any) => {
       .map((line) => `  ${line}`)
       .join('\n');
 
-  (customConsole || console)
-    .log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context || ''}`);
+  // tslint:disable-next-line:no-console
+  console.log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context || ''}`);
 };

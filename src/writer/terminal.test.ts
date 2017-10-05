@@ -3,77 +3,74 @@ const constantTime = new Date('2017-10-07');
 
 describe('Terminal Logger', () => {
   it('Should call console.log', () => {
-    const logFunc = jest.fn();
-    terminalWriter(
-      {
-        context: null,
-        level: 'debug',
-        msg: 'Debug message',
-        time: constantTime,
-      },
-      { log: logFunc },
-    );
+    const spy = jest.spyOn(console, 'log');
+    terminalWriter({
+      context: null,
+      level: 'debug',
+      msg: 'Debug message',
+      time: constantTime,
+    });
 
-    expect(logFunc).toHaveBeenCalledTimes(1);
-    expect(logFunc.mock.calls[0][0]).toContain('Debug message');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy.mock.calls[0][0]).toContain('Debug message');
+
+    spy.mockReset();
+    spy.mockRestore();
   });
 
   it('should print ISO formatted time', () => {
-    const logFunc = jest.fn();
+    const spy = jest.spyOn(console, 'log');
     const time = new Date();
-    terminalWriter(
-      {
-        context: null,
-        level: 'debug',
-        msg: 'Hi',
-        time,
-      },
-      { log: logFunc },
-    );
+    terminalWriter({
+      context: null,
+      level: 'debug',
+      msg: 'Hi',
+      time,
+    });
 
-    expect(logFunc).toHaveBeenCalledTimes(1);
-    expect(logFunc.mock.calls[0][0]).toContain(time.toISOString());
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy.mock.calls[0][0]).toContain(time.toISOString());
+
+    spy.mockReset();
+    spy.mockRestore();
   });
 
   it('should print log level', () => {
-    const logFunc = jest.fn();
+    const spy = jest.spyOn(console, 'log');
     ['debug', 'info', 'warn', 'error', '-'].forEach((level) => {
-      terminalWriter(
-        {
-          context: null,
-          level,
-          msg: 'Hi',
-          time: constantTime,
-        },
-        { log: logFunc },
-      );
+      terminalWriter({
+        context: null,
+        level,
+        msg: 'Hi',
+        time: constantTime,
+      });
     });
 
-    expect(logFunc).toHaveBeenCalledTimes(5);
+    expect(spy).toHaveBeenCalledTimes(5);
     ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'UNKNOWN'].forEach((text, i) => {
-      expect(logFunc.mock.calls[i][0]).toContain(text);
+      expect(spy.mock.calls[i][0]).toContain(text);
     });
+
+    spy.mockReset();
+    spy.mockRestore();
   });
 
   it('should print context', () => {
-    const logFunc = jest.fn();
-    terminalWriter(
-      {
-        context: {
-          field1: 'value',
-          field2: {
-            child: null,
-          },
+    const spy = jest.spyOn(console, 'log');
+    terminalWriter({
+      context: {
+        field1: 'value',
+        field2: {
+          child: null,
         },
-        level: 'debug',
-        msg: 'Hi',
-        time: constantTime,
       },
-      { log: logFunc },
-    );
+      level: 'debug',
+      msg: 'Hi',
+      time: constantTime,
+    });
 
-    expect(logFunc).toHaveBeenCalledTimes(1);
-    const content = logFunc.mock.calls[0][0];
+    expect(spy).toHaveBeenCalledTimes(1);
+    const content = spy.mock.calls[0][0];
     [
       /field1.*:.*"?.*value.*"?/,
       /field2.*:/,
@@ -81,5 +78,8 @@ describe('Terminal Logger', () => {
     ].forEach((re) => {
       expect(content).toMatch(re);
     });
+
+    spy.mockReset();
+    spy.mockRestore();
   });
 });
