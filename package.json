@@ -46,6 +46,7 @@
     ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
+    "mapCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.ts"
     ]
