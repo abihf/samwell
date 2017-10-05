@@ -1,7 +1,4 @@
-// @flow
-/* eslint-env jest */
-
-const dumbWriter = require('./dumb');
+import dumbWriter from './dumb';
 const constantTime = new Date('2017-10-07');
 
 describe('Dumb Logger', () => {
@@ -9,12 +6,12 @@ describe('Dumb Logger', () => {
     const logFunc = jest.fn();
     dumbWriter(
       {
-        time: constantTime,
+        context: { test: 123 },
         level: 'debug',
         msg: 'Debug message',
-        context: { test: 123 },
+        time: constantTime,
       },
-      { debug: logFunc }
+      { debug: logFunc },
     );
 
     expect(logFunc).toHaveBeenCalledTimes(1);
@@ -25,20 +22,20 @@ describe('Dumb Logger', () => {
   it('should call console.*', () => {
     const consoleMock = {
       debug: jest.fn(),
+      error: jest.fn(),
       info: jest.fn(),
       warn: jest.fn(),
-      error: jest.fn(),
     };
 
-    Object.keys(consoleMock).forEach(level => {
+    Object.keys(consoleMock).forEach((level) => {
       dumbWriter(
         {
-          time: constantTime,
+          context: null,
           level,
           msg: 'Hi',
-          context: null,
+          time: constantTime,
         },
-        consoleMock
+        consoleMock,
       );
       expect(consoleMock[level]).toHaveBeenCalledTimes(1);
     });

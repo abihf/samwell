@@ -1,16 +1,13 @@
-// @flow
-/* eslint-env jest */
-
-const jsonWriter = require('./json');
+import jsonWriter from './json';
 const constantTime = new Date('2017-10-07');
 
 describe('JSON Logger', () => {
   it('Should return one line valid json', () => {
     const logFunc = jest.fn();
     const logItem = {
+      context: { test: 123 },
       level: 'debug',
       msg: 'Debug message',
-      context: { test: 123 },
     };
     jsonWriter(Object.assign({}, logItem, { time: constantTime }), {
       log: logFunc,
@@ -29,14 +26,12 @@ describe('JSON Logger', () => {
     obj1.d = obj2;
     jsonWriter(
       {
-        time: constantTime,
+        context: obj2,
         level: 'debug',
         msg: 'Debug message',
-        context: obj2,
+        time: constantTime,
       },
-      {
-        log: logFunc,
-      }
+      { log: logFunc },
     );
 
     expect(logFunc).toHaveBeenCalledTimes(1);

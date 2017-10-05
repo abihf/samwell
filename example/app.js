@@ -1,13 +1,12 @@
 // @flow
-
-const logger = require('../index');
 require('../register-server');
+const logger = require('../index');
 
 logger.debug('Hello word!', { test: 1, otherField: { child: true } });
-logger.info('I am %s.', 'Samwell');
+logger.info('I am {0}.', 'Samwell');
 
 const childLogger = logger.createChild({ where: 'Whesteros' });
-childLogger.warn('I think I found %s', 'something', {
+childLogger.warn('I think I found {0}', 'something', {
   what: 'Iron Throne',
 });
 

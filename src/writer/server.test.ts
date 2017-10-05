@@ -1,9 +1,6 @@
-// @flow
-/* eslint-env jest */
-
-const { getServerWriter } = require('./server');
-const jsonWriter = require('./json');
-const terminalWriter = require('./terminal');
+import jsonWriter from './json';
+import { getServerWriter } from './server';
+import terminalWriter from './terminal';
 
 describe('Server logger', () => {
   it('should use terminal if no environment defined', () => {

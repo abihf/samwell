@@ -15,11 +15,10 @@ install:
 script:
   - set -e
   - yarn lint
-  - yarn flow
   - yarn test
   - codecov
 
-before_deploy: 
+before_deploy:
   - yarn build
 
 deploy:

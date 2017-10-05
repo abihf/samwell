@@ -1,12 +1,10 @@
-// @flow
-
-import colors from 'colors/safe';
-import prettyjson from 'prettyjson';
+import * as colors from 'colors/safe';
+import * as prettyjson from 'prettyjson';
 import { normalizeLogError } from '../error';
-import type { LogItem } from '../logger';
+import { ILogItem } from '../logger';
 
-module.exports = (dirtyLog: LogItem, _console: any) => {
-  const log: { [name: string]: any } | LogItem = normalizeLogError(dirtyLog);
+export default  (dirtyLog: ILogItem, customConsole?: any) => {
+  const log: ILogItem = normalizeLogError(dirtyLog);
 
   const time: string = colors.bgBlue.white(log.time.toISOString());
   let level: string = '';
@@ -33,9 +31,9 @@ module.exports = (dirtyLog: LogItem, _console: any) => {
     prettyjson
       .render(log.context)
       .split('\n')
-      .map(line => `  ${line}`)
+      .map((line) => `  ${line}`)
       .join('\n');
 
-  (_console || console)
+  (customConsole || console)
     .log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context || ''}`);
 };

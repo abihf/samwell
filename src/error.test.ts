@@ -1,37 +1,34 @@
-// @flow
-/* eslint-env jest */
-
-const { errorToObject, normalizeLogError } = require('./error');
+import { errorToObject, normalizeLogError } from './error';
 
 describe('Error handler', () => {
   it('should convert Error object to map', () => {
     const err = new Error('error message');
     const map = errorToObject(err);
     expect(map).toMatchObject({
-      name: 'Error',
       message: 'error message',
+      name: 'Error',
     });
     expect(map.stack.length).toBeGreaterThan(0);
   });
 
   it('should convert error inside LogItem', () => {
     const normalized = normalizeLogError({
-      time: new Date(),
-      level: 'debug',
-      msg: 'log message',
       context: {
         err: new Error('another error message'),
       },
+      level: 'debug',
+      msg: 'log message',
+      time: new Date(),
     });
 
     expect(normalized).toMatchObject({
-      msg: 'log message',
       context: {
         err: {
-          name: 'Error',
           message: 'another error message',
+          name: 'Error',
         },
       },
+      msg: 'log message',
     });
   });
 });

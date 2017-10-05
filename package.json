@@ -2,17 +2,17 @@
   "name": "samwell",
   "version": "0.0.3",
   "description": "Zero config logger for Javascript",
-  "main": "lib/index.js",
+  "main": "index.js",
   "files": [
     "lib/",
     "index.js",
     "register-server.js"
   ],
   "scripts": {
-    "build": "babel src -d lib",
-    "lint": "eslint src/",
-    "flow": "flow check",
-    "test": "jest"
+    "build": "tsc",
+    "lint": "tslint -p tsconfig.json && tslint -p tsconfig-test.json",
+    "test": "jest",
+    "dts": "dts-bundle --name samwell --main index.d.ts"
   },
   "repository": "https://www.github.com/abihf/samwell",
   "author": "Abi Hafshin <abi@hafs.in>",
@@ -23,30 +23,31 @@
     "safe-json-stringify": "^1.0.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-jest": "^20.0.3",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-    "babel-plugin-transform-flow-comments": "^6.22.0",
-    "eslint": "^3.14.1",
-    "eslint-config-marlint": "^5.0.2",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-flowtype": "~2.30.0",
-    "eslint-plugin-jest": "^20.0.3",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-react": "^6.9.0",
-    "flow-bin": "^0.51.0",
-    "jest": "^20.0.4"
+    "@types/jest": "^21.1.2",
+    "@types/node": "^8.0.32",
+    "dts-bundle": "^0.7.3",
+    "jest": "^21.2.1",
+    "ts-jest": "^21.1.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3"
   },
   "jest": {
     "transform": {
-      "^.+\\.js$": "babel-jest"
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts$",
+    "moduleFileExtensions": [
+      "ts", "js"
+    ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "src/**/*.ts"
     ]
   }
 }

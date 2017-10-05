@@ -1,5 +1,3 @@
 {
-  "javascript.validate.enable": false,
-  "prettier.eslintIntegration": true,
-  "flow.useNPMPackagedFlow": true
+  "prettier.eslintIntegration": true
 }

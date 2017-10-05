@@ -1,7 +1,4 @@
-// @flow
-/* eslint-env jest */
-
-const terminalWriter = require('./terminal');
+import terminalWriter from './terminal';
 const constantTime = new Date('2017-10-07');
 
 describe('Terminal Logger', () => {
@@ -9,12 +6,12 @@ describe('Terminal Logger', () => {
     const logFunc = jest.fn();
     terminalWriter(
       {
-        time: constantTime,
+        context: null,
         level: 'debug',
         msg: 'Debug message',
-        context: null,
+        time: constantTime,
       },
-      { log: logFunc }
+      { log: logFunc },
     );
 
     expect(logFunc).toHaveBeenCalledTimes(1);
@@ -26,12 +23,12 @@ describe('Terminal Logger', () => {
     const time = new Date();
     terminalWriter(
       {
-        time,
+        context: null,
         level: 'debug',
         msg: 'Hi',
-        context: null,
+        time,
       },
-      { log: logFunc }
+      { log: logFunc },
     );
 
     expect(logFunc).toHaveBeenCalledTimes(1);
@@ -40,15 +37,15 @@ describe('Terminal Logger', () => {
 
   it('should print log level', () => {
     const logFunc = jest.fn();
-    ['debug', 'info', 'warn', 'error', '-'].forEach(level => {
+    ['debug', 'info', 'warn', 'error', '-'].forEach((level) => {
       terminalWriter(
         {
-          time: constantTime,
+          context: null,
           level,
           msg: 'Hi',
-          context: null,
+          time: constantTime,
         },
-        { log: logFunc }
+        { log: logFunc },
       );
     });
 
@@ -62,17 +59,17 @@ describe('Terminal Logger', () => {
     const logFunc = jest.fn();
     terminalWriter(
       {
-        time: constantTime,
-        level: 'debug',
-        msg: 'Hi',
         context: {
           field1: 'value',
           field2: {
             child: null,
           },
         },
+        level: 'debug',
+        msg: 'Hi',
+        time: constantTime,
       },
-      { log: logFunc }
+      { log: logFunc },
     );
 
     expect(logFunc).toHaveBeenCalledTimes(1);
@@ -81,7 +78,7 @@ describe('Terminal Logger', () => {
       /field1.*:.*"?.*value.*"?/,
       /field2.*:/,
       /child.*:.*null/,
-    ].forEach(re => {
+    ].forEach((re) => {
       expect(content).toMatch(re);
     });
   });

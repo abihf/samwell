@@ -1,11 +1,10 @@
-/* eslint-env jest */
 
-const { Logger } = require('./logger');
+import { Logger } from './logger';
 
 describe('Logger', () => {
   it('should return valid date', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
+    const logger = new Logger(undefined, writer);
     logger.debug('Hello');
 
     expect(writer).toHaveBeenCalledTimes(1);
@@ -15,7 +14,7 @@ describe('Logger', () => {
 
   it('should return valid log level', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
+    const logger = new Logger(undefined, writer);
     logger.debug('Hello');
     logger.info('Word');
     logger.warn('I am');
@@ -38,8 +37,8 @@ describe('Logger', () => {
 
   it('should format string', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
-    logger.info('Hello %s (%d)', 'name', 12);
+    const logger = new Logger(undefined, writer);
+    logger.info('Hello {0} ({1})', 'name', 12);
 
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
@@ -49,7 +48,7 @@ describe('Logger', () => {
 
   it('should return context', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
+    const logger = new Logger(undefined, writer);
     logger.info('Hello', {
       test: 123,
     });
@@ -64,59 +63,59 @@ describe('Logger', () => {
 
   it('should format string & also return context', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
-    logger.info('Hello %s (%d)', 'other', 21, {
+    const logger = new Logger(undefined, writer);
+    logger.info('Hello {0} ({1})', 'other', 21, {
       test: 234,
     });
 
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
-      msg: 'Hello other (21)',
       context: {
         test: 234,
       },
+      msg: 'Hello other (21)',
     });
   });
 
   it('should log the error', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
+    const logger = new Logger(undefined, writer);
     const err = new Error('error message');
     logger.error('Error test', err);
 
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
-      msg: 'Error test',
       context: { err },
+      msg: 'Error test',
     });
   });
 
   it('should be able take message from error', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
+    const logger = new Logger(undefined, writer);
     const err = new Error('error message');
     logger.error(err);
 
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
-      msg: 'error message',
       context: { err },
+      msg: 'error message',
     });
   });
 
   it('should be able to create child logger', () => {
     const writer = jest.fn();
-    const logger = new Logger(null, writer);
+    const logger = new Logger(undefined, writer);
     const childLogger = logger.createChild({ field1: 'value1' });
     childLogger.info('Child logger test', { field2: 'value2' });
 
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
-      msg: 'Child logger test',
       context: {
         field1: 'value1',
         field2: 'value2',
       },
+      msg: 'Child logger test',
     });
   });
 });

@@ -1,0 +1,23 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.test.ts"
+  ],
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "baseUrl": "src/",
+    "strictNullChecks": true,
+    "module": "commonjs",
+    "target": "es5",
+    "outDir": "lib/",
+    "moduleResolution": "node",
+    "noUnusedLocals":true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "lib": [
+      "es6"
+    ]
+  }
+}
