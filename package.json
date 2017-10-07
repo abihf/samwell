@@ -16,7 +16,7 @@
     "build": "tsc",
     "lint": "tslint -p tsconfig.json && tslint -p tsconfig-test.json",
     "test": "jest",
-    "dts": "dts-bundle --name samwell --main lib/index.d.ts --baseDir ./ --out samwell.d.ts && cat register-server.d.ts >> samwell.d.ts"
+    "dts": "dts-bundle --name samwell --main ./index.d.ts --baseDir ./ --out samwell.d.ts"
   },
   "repository": "https://www.github.com/abihf/samwell",
   "author": "Abi Hafshin <abi@hafs.in>",
