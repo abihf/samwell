@@ -4,36 +4,55 @@ import { normalizeLogError } from '../error';
 import { ILogItem } from '../logger';
 
 export default  (dirtyLog: ILogItem) => {
-  const log: ILogItem = normalizeLogError(dirtyLog);
+  if (
+    dirtyLog.level === 'debug' &&
+    !process.env.DEBUG &&
+    !process.env.SAMWELL_DEBUG
+  ) {
+    return;
+  }
 
-  const time: string = colors.bgBlue.white(log.time.toISOString());
-  let level: string = '';
+  const log: ILogItem = normalizeLogError(dirtyLog);
+  const timeString = formatTime(log.time);
+  let prefix: string;
   switch (log.level) {
     case 'debug':
-      level = colors.bgWhite.green(' DEBUG:');
+      prefix = colors.cyan(`[${timeString} ${colors.bold('DBG')}]`);
       break;
     case 'info':
-      level = colors.bgWhite.blue(' INFO:');
+      prefix = colors.blue(`[${timeString} ${colors.bold('INF')}]`);
       break;
     case 'warn':
-      level = colors.bgWhite.yellow(' WARNING:');
+      prefix = colors.yellow(`[${timeString} ${colors.bold('WRN')}]`);
       break;
     case 'error':
-      level = colors.bgWhite.red(' ERROR:');
+      prefix = colors.red(`[${timeString} ${colors.bold('ERR')}]`);
       break;
-    default:
-      level = colors.bgWhite.cyan(' UNKNOWN:');
-      break;
+      default:
+      prefix = `[${timeString} ???]`;
   }
 
   const context =
     log.context &&
     prettyjson
-      .render(log.context)
+      .render(log.context, {keysColor: 'grey'})
       .split('\n')
       .map((line) => `  ${line}`)
       .join('\n');
 
   // tslint:disable-next-line:no-console
-  console.log(`${time}${level} ${log.msg}${context ? '\n' : ''}${context || ''}`);
+  console.log(`${prefix} ${log.msg}${context ? `\n${context}` : ''}`);
 };
+
+function formatTime(t: Date): string {
+  return [
+    padString(t.getHours(), 2),
+    padString(t.getMinutes(), 2),
+    padString(t.getSeconds(), 2),
+    padString(t.getMilliseconds(), 3),
+  ].join(':');
+}
+
+function padString(str: any, len: number, pad: string = '0') {
+  return Array(len - String(str).length + 1).join(pad) + str;
+}
