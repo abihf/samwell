@@ -28,31 +28,29 @@ export default  (dirtyLog: ILogItem) => {
     case 'error':
       prefix = colors.red(`[${timeString} ${colors.bold('ERR')}]`);
       break;
-      default:
+    default:
       prefix = `[${timeString} ???]`;
   }
 
-  const context =
-    log.context &&
-    prettyjson
-      .render(log.context, {keysColor: 'grey'})
-      .split('\n')
-      .map((line) => `  ${line}`)
-      .join('\n');
-
   // tslint:disable-next-line:no-console
-  console.log(`${prefix} ${log.msg}${context ? `\n${context}` : ''}`);
+  console.log(`${prefix} ${log.msg}`);
+  if (log.context) {
+    prettyjson.render(log.context, {keysColor: 'grey'})
+      .split('\n')
+      // tslint:disable-next-line:no-console
+      .map((line) => console.log(`  ${line}`));
+  }
 };
 
 function formatTime(t: Date): string {
   return [
-    padString(t.getHours(), 2),
-    padString(t.getMinutes(), 2),
-    padString(t.getSeconds(), 2),
-    padString(t.getMilliseconds(), 3),
+    padNumber(t.getHours(), 2),
+    padNumber(t.getMinutes(), 2),
+    padNumber(t.getSeconds(), 2),
+    padNumber(t.getMilliseconds(), 3),
   ].join(':');
 }
 
-function padString(str: any, len: number, pad: string = '0') {
-  return Array(len - String(str).length + 1).join(pad) + str;
+function padNumber(n: any, len: number) {
+  return Array(len - String(n).length + 1).join('0') + n;
 }

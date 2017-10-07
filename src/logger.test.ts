@@ -39,10 +39,14 @@ describe('Logger', () => {
     const writer = jest.fn();
     const logger = new Logger(undefined, writer);
     logger.info('Hello {0} ({1})', 'name', 12);
+    logger.warn('Args not {0}: {1}', 'found');
 
-    expect(writer).toHaveBeenCalledTimes(1);
+    expect(writer).toHaveBeenCalledTimes(2);
     expect(writer.mock.calls[0][0]).toMatchObject({
       msg: 'Hello name (12)',
+    });
+    expect(writer.mock.calls[1][0]).toMatchObject({
+      msg: 'Args not found: {1}',
     });
   });
 
@@ -101,6 +105,17 @@ describe('Logger', () => {
       context: { err },
       msg: 'error message',
     });
+  });
+
+  it('should show error when log function has been called without message', () => {
+    const writer = jest.fn();
+    const logger = new Logger(undefined, writer);
+    logger.info();
+
+    expect(writer).toHaveBeenCalledTimes(1);
+    expect(writer.mock.calls[0][0].context.err).toBeInstanceOf(Error);
+    expect(writer.mock.calls[0][0].context.err.message)
+      .toBe('Logger has been called without message');
   });
 
   it('should be able to create child logger', () => {

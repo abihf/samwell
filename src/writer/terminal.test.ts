@@ -89,8 +89,8 @@ describe('Terminal Logger', () => {
       time: constantTime,
     });
 
-    expect(spy).toHaveBeenCalledTimes(1);
-    const content = spy.mock.calls[0][0];
+    expect(spy).toHaveBeenCalled();
+    const content = spy.mock.calls.map((c) => c[0]).join('\n');
     [
       /field1.*:.*"?.*value.*"?/,
       /field2.*:/,

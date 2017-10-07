@@ -5,7 +5,7 @@ export function errorToObject(err: Error): INormalizedError {
     message: err.message,
     name: err.name,
     stack: err.stack
-      ? err.stack.split('\n').slice(1).map((line) => line.replace(/^\s+/, ''))
+      ? err.stack.split('\n').slice(1).map((line) => line.trim())
       : [],
   };
 }

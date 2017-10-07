@@ -11,6 +11,13 @@ describe('Error handler', () => {
     expect(map.stack.length).toBeGreaterThan(0);
   });
 
+  it('should handle if error have no stack', () => {
+    const err = new Error('error message');
+    err.stack = null;
+    const map = errorToObject(err);
+    expect(map.stack).toHaveLength(0);
+  });
+
   it('should convert error inside LogItem', () => {
     const normalized = normalizeLogError({
       context: {

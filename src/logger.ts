@@ -66,6 +66,8 @@ export class Logger {
       case 0:
         if (error) {
           msg = error.message;
+        } else {
+          realContext = { err: new Error('Logger has been called without message') };
         }
         break;
       case 1:
@@ -76,10 +78,11 @@ export class Logger {
     }
 
     this.writer({
-      context: realContext,
+      time: new Date(),
+      // tslint:disable-next-line:object-literal-sort-keys
       level,
       msg,
-      time: new Date(),
+      context: realContext,
     });
   }
 }
