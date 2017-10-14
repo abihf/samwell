@@ -43,6 +43,11 @@ export class Logger {
   }
 
   private log(level: string, ...args: any[]) {
+    const time = new Date();
+    setTimeout(() => this.actualLog(time, level, args), 0);
+  }
+
+  private actualLog(time: Date, level: string, args: any[]) {
     let context: ILogItemContext | Error | undefined;
     if (typeof args[args.length - 1] === 'object') {
       context = args.pop();
@@ -77,13 +82,14 @@ export class Logger {
         msg = formatString(args[0], args.slice(1));
     }
 
+    /* tslint:disable:object-literal-sort-keys */
     this.writer({
-      time: new Date(),
-      // tslint:disable-next-line:object-literal-sort-keys
+      time,
       level,
       msg,
       context: realContext,
     });
+    /* tslint:enable:object-literal-sort-keys */
   }
 }
 

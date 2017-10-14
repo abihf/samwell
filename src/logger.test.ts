@@ -2,14 +2,32 @@
 import { Logger } from './logger';
 
 describe('Logger', () => {
-  it('should return valid date', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  it('Should defer log processing', () => {
     const writer = jest.fn();
     const logger = new Logger(undefined, writer);
     logger.debug('Hello');
 
+    expect(writer).not.toBeCalled();
+    jest.runTimersToTime(1);
+    expect(writer).toBeCalled();
+  });
+
+  it('should return valid date', () => {
+    const writer = jest.fn();
+    const logger = new Logger(undefined, writer);
+    const now = new Date();
+    logger.debug('Hello');
+
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toHaveProperty('time');
-    expect(writer.mock.calls[0][0].time).toBeInstanceOf(Date);
+    const time: Date = writer.mock.calls[0][0].time;
+    expect(time).toBeInstanceOf(Date);
+    expect(time).toEqual(now);
   });
 
   it('should return valid log level', () => {
@@ -20,6 +38,7 @@ describe('Logger', () => {
     logger.warn('I am');
     logger.error('Samwell');
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(4);
     expect(writer.mock.calls[0][0]).toMatchObject({
       level: 'debug',
@@ -41,6 +60,7 @@ describe('Logger', () => {
     logger.info('Hello {0} ({1})', 'name', 12);
     logger.warn('Args not {0}: {1}', 'found');
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(2);
     expect(writer.mock.calls[0][0]).toMatchObject({
       msg: 'Hello name (12)',
@@ -57,6 +77,7 @@ describe('Logger', () => {
       test: 123,
     });
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
       context: {
@@ -72,6 +93,7 @@ describe('Logger', () => {
       test: 234,
     });
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
       context: {
@@ -87,6 +109,7 @@ describe('Logger', () => {
     const err = new Error('error message');
     logger.error('Error test', err);
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
       context: { err },
@@ -100,6 +123,7 @@ describe('Logger', () => {
     const err = new Error('error message');
     logger.error(err);
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
       context: { err },
@@ -112,6 +136,7 @@ describe('Logger', () => {
     const logger = new Logger(undefined, writer);
     logger.info();
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0].context.err).toBeInstanceOf(Error);
     expect(writer.mock.calls[0][0].context.err.message)
@@ -124,6 +149,7 @@ describe('Logger', () => {
     const childLogger = logger.createChild({ field1: 'value1' });
     childLogger.info('Child logger test', { field2: 'value2' });
 
+    jest.runTimersToTime(1);
     expect(writer).toHaveBeenCalledTimes(1);
     expect(writer.mock.calls[0][0]).toMatchObject({
       context: {
