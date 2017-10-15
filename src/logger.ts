@@ -20,29 +20,35 @@ export interface ILogItem {
 export type Writer = (log: ILogItem) => void;
 
 export class Logger {
-  public debug: LogFunction;
-  public info: LogFunction;
-  public warn: LogFunction;
-  public error: LogFunction;
-
   public writer: Writer;
   public baseContext?: ILogItemContext;
 
   constructor(baseContext: ILogItemContext | undefined, writer: Writer) {
     this.writer = writer;
     this.baseContext = baseContext;
-
-    this.debug = this.log.bind(this, 'debug');
-    this.info = this.log.bind(this, 'info');
-    this.warn = this.log.bind(this, 'warn');
-    this.error = this.log.bind(this, 'error');
   }
 
   public createChild(context: ILogItemContext): Logger {
     return new Logger({ ...this.baseContext, ...context }, this.writer);
   }
 
-  private log(level: string, ...args: any[]) {
+  public debug(...args: any[]) {
+    this.log('debug', args);
+  }
+
+  public info(...args: any[]) {
+    this.log('info', args);
+  }
+
+  public warn(...args: any[]) {
+    this.log('warn', args);
+  }
+
+  public error(...args: any[]) {
+    this.log('error', args);
+  }
+
+  private log(level: string, args: any[]) {
     const time = new Date();
     setTimeout(() => this.actualLog(time, level, args), 0);
   }
