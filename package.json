@@ -2,7 +2,7 @@
   "name": "samwell",
   "version": "0.1.0",
   "description": "Zero config logger for Javascript",
-  "main": "index.js",
+  "main": "lib/index.js",
   "types": "./samwell.d.ts",
   "files": [
     "README.md",
@@ -16,7 +16,7 @@
     "build": "tsc",
     "lint": "tslint -p tsconfig.json && tslint -p tsconfig-test.json",
     "test": "jest",
-    "dts": "dts-bundle --name samwell --main ./index.d.ts --baseDir ./ --out samwell.d.ts"
+    "dts": "dts-bundle --name samwell --headerPath header.d.ts.tpl --main ./lib/index.d.ts --baseDir ./ --out samwell.d.ts"
   },
   "repository": "https://www.github.com/abihf/samwell",
   "author": "Abi Hafshin <abi@hafs.in>",

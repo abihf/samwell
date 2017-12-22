@@ -1,3 +1,4 @@
+import { LevelString } from '../logger';
 import jsonWriter from './json';
 const constantTime = new Date('2017-10-07');
 
@@ -6,7 +7,7 @@ describe('JSON Logger', () => {
     const spy = jest.spyOn(console, 'log');
     const logItem = {
       context: { test: 123 },
-      level: 'debug',
+      level: LevelString.DEBUG,
       msg: 'Debug message',
     };
     jsonWriter(Object.assign({}, logItem, { time: constantTime }));
@@ -28,7 +29,7 @@ describe('JSON Logger', () => {
     obj1.d = obj2;
     jsonWriter({
       context: obj2,
-      level: 'debug',
+      level: LevelString.DEBUG,
       msg: 'Debug message',
       time: constantTime,
     });

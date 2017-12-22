@@ -2,6 +2,7 @@ import * as colors from 'colors/safe';
 import * as prettyjson from 'prettyjson';
 import { normalizeLogError } from '../error';
 import { ILogItem } from '../logger';
+import { LevelString } from '../logger';
 
 export default  (dirtyLog: ILogItem) => {
   if (
@@ -16,17 +17,23 @@ export default  (dirtyLog: ILogItem) => {
   const timeString = formatTime(log.time);
   let prefix: string;
   switch (log.level) {
-    case 'debug':
+    case LevelString.TRACE:
+      prefix = colors.grey(`[${timeString} ${colors.bold('TRC')}]`);
+      break;
+    case LevelString.DEBUG:
       prefix = colors.cyan(`[${timeString} ${colors.bold('DBG')}]`);
       break;
-    case 'info':
+    case LevelString.INFO:
       prefix = colors.blue(`[${timeString} ${colors.bold('INF')}]`);
       break;
-    case 'warn':
+    case LevelString.WARNING:
       prefix = colors.yellow(`[${timeString} ${colors.bold('WRN')}]`);
       break;
-    case 'error':
+    case LevelString.ERROR:
       prefix = colors.red(`[${timeString} ${colors.bold('ERR')}]`);
+      break;
+    case LevelString.FATAL:
+      prefix = colors.magenta(`[${timeString} ${colors.bold('FTL')}]`);
       break;
     default:
       prefix = `[${timeString} ???]`;

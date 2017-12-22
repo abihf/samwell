@@ -1,4 +1,6 @@
-import dumbWriter from './dumb';
+import { LevelString } from '../logger';
+import dumbWriter, { LEVEL_METHOD_MAP } from './dumb';
+
 const constantTime = new Date('2017-10-07');
 
 describe('Dumb Logger', () => {
@@ -6,7 +8,7 @@ describe('Dumb Logger', () => {
     const spy = jest.spyOn(console, 'info');
     dumbWriter({
       context: { test: 123 },
-      level: 'info',
+      level: LevelString.INFO,
       msg: 'Debug message',
       time: constantTime,
     });
@@ -18,26 +20,14 @@ describe('Dumb Logger', () => {
     spy.mockRestore();
   });
 
-  it('Should not call console.log', () => {
-    // TODO: how to check it?
-    dumbWriter({
-      context: { test: 123 },
-      level: 'debug',
-      msg: 'Debug message',
-      time: constantTime,
-    });
-  });
-
-  it('should call console.*', () => {
-    type ConsoleFunctions = 'info' | 'warn' | 'error';
-    const levels = ['info', 'warn', 'error'];
-
-    levels.forEach((level: ConsoleFunctions, i) => {
-      const spy = jest.spyOn(console, level);
+  it('should call console.* correctly', () => {
+    Object.keys(LEVEL_METHOD_MAP).map((level: LevelString) => {
+      const method = LEVEL_METHOD_MAP[level];
+      const spy = jest.spyOn(console, method);
       dumbWriter({
         context: null,
         level,
-        msg: 'Hi',
+        msg: level as string,
         time: constantTime,
       });
       expect(spy).toHaveBeenCalledTimes(1);

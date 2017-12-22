@@ -1,4 +1,6 @@
+import { LevelString } from '../logger';
 import terminalWriter from './terminal';
+
 const constantTime = new Date('2017-10-07T01:02:03.045');
 
 describe('Terminal Logger', () => {
@@ -10,7 +12,7 @@ describe('Terminal Logger', () => {
     const spy = jest.spyOn(console, 'log');
     terminalWriter({
       context: null,
-      level: 'debug',
+      level: LevelString.DEBUG,
       msg: 'Debug message',
       time: constantTime,
     });
@@ -27,7 +29,7 @@ describe('Terminal Logger', () => {
     process.env.SAMWELL_DEBUG = '';
     terminalWriter({
       context: null,
-      level: 'debug',
+      level: LevelString.DEBUG,
       msg: 'Debug message',
       time: constantTime,
     });
@@ -43,7 +45,7 @@ describe('Terminal Logger', () => {
     const time = constantTime;
     terminalWriter({
       context: null,
-      level: 'debug',
+      level: LevelString.DEBUG,
       msg: 'Hi',
       time,
     });
@@ -57,7 +59,15 @@ describe('Terminal Logger', () => {
 
   it('should print log level', () => {
     const spy = jest.spyOn(console, 'log');
-    ['debug', 'info', 'warn', 'error', '-'].forEach((level) => {
+    [
+      LevelString.TRACE,
+      LevelString.DEBUG,
+      LevelString.INFO,
+      LevelString.WARNING,
+      LevelString.ERROR,
+      LevelString.FATAL,
+      '-',
+    ].forEach((level: LevelString) => {
       terminalWriter({
         context: null,
         level,
@@ -66,8 +76,8 @@ describe('Terminal Logger', () => {
       });
     });
 
-    expect(spy).toHaveBeenCalledTimes(5);
-    ['DBG', 'INF', 'WRN', 'ERR', '???'].forEach((text, i) => {
+    expect(spy).toHaveBeenCalledTimes(7);
+    ['TRC', 'DBG', 'INF', 'WRN', 'ERR', 'FTL', '???'].forEach((text, i) => {
       expect(spy.mock.calls[i][0]).toContain(text);
     });
 
@@ -84,7 +94,7 @@ describe('Terminal Logger', () => {
           child: null,
         },
       },
-      level: 'debug',
+      level: LevelString.DEBUG,
       msg: 'Hi',
       time: constantTime,
     });
