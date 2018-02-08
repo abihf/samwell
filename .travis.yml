@@ -16,7 +16,7 @@ script:
   - set -e
   - yarn lint
   - yarn test
-  - codecov
+  - codecov -f coverage/clover.xml
   - yarn build
   - yarn dts
 
